@@ -130,4 +130,24 @@ public class Control {
         }
         return b;
     }
+    
+    public boolean removeAlumno(int id){
+        boolean b = false;
+        try{
+            b = conexionBD.removeAlumno(id);
+        } catch (Exception e){
+            System.err.println("Error durante a conexion con la BD: " + e.getMessage());
+        }
+        return b;
+    }
+    
+    public boolean removeMateria(int id){
+        boolean b = false;
+        try{
+            b = conexionBD.removeMateria(id);
+        } catch (Exception e){
+            System.err.println("Error durante a conexion con la BD: " + e.getMessage());
+        }
+        return b;
+    }
 }

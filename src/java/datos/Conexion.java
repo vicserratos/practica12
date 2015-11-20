@@ -227,5 +227,52 @@ public class Conexion {
         }
         return b;
     }
+    
+    public boolean removeAlumno(int id){
+        boolean b = false;
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT AspirantenIdAspirante FROM Alumno WHERE nIdAlumno = " + id);
+            rs.next();
+            int idAspirante = rs.getInt(1);           
+            stmt.executeUpdate("DELETE FROM Alumno_CTipoCertificado WHERE AlumnonIdAlumno = " + idAspirante);
+            stmt.executeUpdate("DELETE FROM Alumno_Materia_Profesor WHERE AlumnonIdAlumno = " + idAspirante);
+            stmt.executeUpdate("DELETE FROM Beca WHERE AlumnonIdAlumno = " + idAspirante);
+            stmt.executeUpdate("DELETE FROM Tutor_Aspirante WHERE AspiratenIdAspirante = " + idAspirante);
+            stmt.executeUpdate("DELETE FROM Alumno WHERE nIdAlumno = " + id);            
+            stmt.executeUpdate("DELETE FROM Aspirante WHERE nIdAspirante = " + idAspirante);         
+            b = true;
+        } catch (Exception e){
+            System.out.println("SQLException: " + e.getMessage());
+        }
+        return b;
+    }
+    
+        public boolean removeMateria(int id){
+        boolean b = false;
+        try{
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT CNivelnIdCNivel FROM Materia WHERE nIdMateria = " + id);
+            rs.next();
+            int nIdCNivel = rs.getInt(1);
+            rs = stmt.executeQuery("SELECT CCiclonIdCCiclo FROM Materia_Profesor WHERE MaterianIdMateria = " + id);
+            rs.next();
+            int cCiclonIdCCiclo = rs.getInt(1);
+            stmt.executeUpdate("DELETE FROM Materia_Profesor WHERE MaterianIdMateria = " + id);   
+            System.out.println("4");
+            stmt.executeUpdate("DELETE FROM Materia WHERE nIdMateria = " + id);   
+            System.out.println("5");
+            stmt.executeUpdate("DELETE FROM CNivel WHERE nIdCNivel = " + nIdCNivel);
+            System.out.println("1");
+            stmt.executeUpdate("DELETE FROM CCiclo WHERE nIdCCiclo = " + cCiclonIdCCiclo);
+            System.out.println("2");
+            stmt.executeUpdate("DELETE FROM CTipoCiclo WHERE nIdTipoCiclo = " + cCiclonIdCCiclo);    
+            System.out.println("3");
+            b = true;
+        } catch (Exception e){
+            System.out.println("SQLException: " + e.getMessage());
+        }
+        return b;
+    }
 }
 
